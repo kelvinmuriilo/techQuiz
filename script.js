@@ -55,8 +55,6 @@ function optionClickEvent(event) {
   }, 1000);
 }
 
-function markAnswerSelected() {}
-
 function markCorrectAnswer(clickedOptionId) {
   let selectedOption = document.getElementById(clickedOptionId);
   selectedOption.style.backgroundColor = "#03fc62";
