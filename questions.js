@@ -18,13 +18,7 @@ let questions = [
   {
     question:
       "Qual das seguintes partes de um computador não é considerado um dispositivo de saída?",
-    options: [
-      "Projetor de vídeo",
-      "Impressora",
-      "Teclado",
-      "Teclado",
-      "Caixa de som",
-    ],
+    options: ["Projetor de vídeo", "Impressora", "Teclado", "Caixa de som"],
     answer: 2,
   },
   {

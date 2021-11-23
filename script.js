@@ -52,12 +52,12 @@ function optionClickEvent(event) {
   currentQuestion++;
   setTimeout(() => {
     showQuestion();
-  }, 1000);
+  }, 180);
 }
 
 function markCorrectAnswer(clickedOptionId) {
   let selectedOption = document.getElementById(clickedOptionId);
-  selectedOption.style.backgroundColor = "#03fc62";
+  selectedOption.style.backgroundColor = "#077a26";
 }
 
 function markWrongAnswer(clickedOptionId) {
