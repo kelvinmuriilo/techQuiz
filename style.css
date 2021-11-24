@@ -12,6 +12,7 @@ body {
   flex-direction: column;
   background-color: #fff;
   font-family: Arial, Helvetica, sans-serif;
+  background-image: url("./assets/background.jpg");
 }
 
 h1 {
@@ -156,7 +157,7 @@ h1 {
   background-color: #fff;
 }
 .option:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .scoreArea {
