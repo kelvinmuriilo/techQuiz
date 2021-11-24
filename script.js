@@ -2,13 +2,14 @@
 let currentQuestion = 0;
 let correctAnswers = 0;
 
-showQuestion();
-
 // events
 document.querySelector(".scoreArea button").addEventListener("click", reset);
+document.querySelector(".startButton").addEventListener("click", showQuestion);
 
 // functions
 function showQuestion() {
+  document.querySelector(".homeArea").style.display = "none";
+  document.querySelector(".progress").style.display = "block";
   if (questions[currentQuestion]) {
     let q = questions[currentQuestion];
 
@@ -62,7 +63,7 @@ function markCorrectAnswer(clickedOptionId) {
 
 function markWrongAnswer(clickedOptionId) {
   let selectedOption = document.getElementById(clickedOptionId);
-  selectedOption.style.backgroundColor = "#942329";
+  selectedOption.style.backgroundColor = "#d41111";
 }
 
 function finishQuiz() {
