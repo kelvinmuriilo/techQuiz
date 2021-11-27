@@ -6,16 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <div class="progress">
       <div class="progress--bar"></div>
     </div>
 
+    <div>
+      <span class="volume"> </span>
+    </div>
+
+    <!-- <audio
+      id="startSound"
+      src="./assets/sounds/start.mpeg"
+      autoplay
+      loop
+    ></audio> -->
+
+    <audio
+      id="startSound"
+      src="./assets/sounds/main.mpeg"
+      autoplay
+      loop
+      muted
+    ></audio>
+    <audio id="mainSound" src="./assets/sounds/main.mpeg"></audio>
+    <audio id="endSound" src="./assets/sounds/end.mpeg"></audio>
+
     <div class="homeArea">
       <img class="logo" src="./assets/logoBranco.png" />
       <div>
-        <input type="text" class="username" placeholder="Insira o seu nome" />
+        <input
+          type="text"
+          class="username"
+          placeholder="Insira o seu nome"
+          required
+        />
       </div>
 
       <div class="buttonArea">
@@ -29,7 +61,11 @@
     </div>
 
     <div class="scoreArea">
-      <img src="prize.png" class="prizeImage" />
+      <div class="winArea">
+        <img src="./assets/FogosBase.gif" class="fireworks" />
+        <img src="./assets/FogosBase2.gif" class="fireworks" />
+      </div>
+      <img src="" class="prizeImage" />
       <div class="scoreText1">Parabéns!</div>
       <div class="scorePct">Acertou 99%</div>
       <div class="scoreText2">Você respondeu 9 questões e acertou 8.</div>

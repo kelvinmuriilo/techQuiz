@@ -1,13 +1,33 @@
 // initial data
 let currentQuestion = 0;
 let correctAnswers = 0;
+let audioIsEnable = true;
+let isDisplayHome = true;
+let isDisplayQuestion = false;
+let isDisplayEnd = false;
 
 // events
 document.querySelector(".scoreArea button").addEventListener("click", reset);
 document.querySelector(".startButton").addEventListener("click", showQuestion);
+document.querySelector(".volume").addEventListener("click", changeSoundMode);
+
+const audioCls = new Audio("./assets/sounds/start.mpeg");
+/* setInterval(() => {
+  audioCls.play();
+}, 1000); */
+
+document.querySelector(
+  ".volume"
+).innerHTML = `<i class="fas fa-volume-up"></i>`;
 
 // functions
 function showQuestion() {
+  isDisplayHome = false;
+  isDisplayQuestion = true;
+  isDisplayEnd = false;
+
+  playMainSound();
+
   document.querySelector(".homeArea").style.display = "none";
   document.querySelector(".progress").style.display = "block";
   if (questions[currentQuestion]) {
@@ -57,30 +77,43 @@ function optionClickEvent(event) {
 }
 
 function markCorrectAnswer(clickedOptionId) {
-  let selectedOption = document.getElementById(clickedOptionId);
+  const selectedOption = document.getElementById(clickedOptionId);
   selectedOption.style.backgroundColor = "#077a26";
 }
 
 function markWrongAnswer(clickedOptionId) {
-  let selectedOption = document.getElementById(clickedOptionId);
+  const selectedOption = document.getElementById(clickedOptionId);
   selectedOption.style.backgroundColor = "#d41111";
 }
 
 function finishQuiz() {
-  let points = Math.floor((correctAnswers / questions.length) * 100);
+  playEndSound();
+  const points = Math.floor((correctAnswers / questions.length) * 100);
+  const scoreText1 = document.querySelector(".scoreText1");
+  const scorePct = document.querySelector(".scorePct");
+  const prizeImage = document.querySelector(".prizeImage");
+  const winArea = document.querySelector(".winArea");
+
+  isDisplayHome = false;
+  isDisplayHome = false;
+  isDisplayEnd = true;
 
   if (points < 30) {
-    document.querySelector(".scoreText1").innerHTML = "Você se saiu mal";
-    document.querySelector(".scorePct").style.color = "#ff0000";
+    scoreText1.innerHTML = "Você se saiu mal";
+    scorePct.style.color = "#ff0000";
+    prizeImage.src = "./assets/YouLose.gif";
   } else if (points >= 30 && points < 70) {
-    document.querySelector(".scoreText1").innerHTML = "Foi por muito pouco!";
-    document.querySelector(".scorePct").style.color = "#ffff00";
+    prizeImage.style.display = "none";
+    scoreText1.innerHTML = "Foi por muito pouco!";
+    scorePct.style.color = "#ffff00";
   } else if (points >= 70) {
-    document.querySelector(".scoreText1").innerHTML = "Parabéns!!";
-    document.querySelector(".scorePct").style.color = "#0d630d";
+    prizeImage.src = "./assets/Trofeu.gif";
+    winArea.style.display = "flex";
+    scoreText1.innerHTML = "Parabéns!";
+    scorePct.style.color = "#0d630d";
   }
 
-  document.querySelector(".scorePct").innerHTML = `Acertou ${points}%`;
+  scorePct.innerHTML = `Acertou ${points}%`;
   document.querySelector(
     ".scoreText2"
   ).innerHTML = `Você  acertou ${correctAnswers} de ${questions.length}.`;
@@ -89,6 +122,64 @@ function finishQuiz() {
   document.querySelector(".questionArea").style.display = "none";
   document.querySelector(".progress--bar").style.width = "100%";
 }
+
+//Sound control
+function playMainSound() {
+  document.getElementById("mainSound").play();
+  document.getElementById("startSound").pause();
+  document.getElementById("endSound").pause();
+}
+
+function playStartSound() {
+  document.getElementById("mainSound").pause();
+  document.getElementById("startSound").play();
+}
+
+function playEndSound() {
+  document.getElementById("endSound").pause();
+  document.getElementById("endSound").currentTime = 0;
+  document.getElementById("mainSound").pause();
+  document.getElementById("endSound").play();
+}
+
+function muteSound() {
+  const audioElements = document.getElementsByTagName("audio");
+
+  for (var i = 0; i < audioElements.length; ++i) {
+    audioElements[i].muted = true;
+  }
+}
+
+function unmuteSound() {
+  if (isDisplayHome) {
+    document.getElementById("startSound").muted = false;
+  }
+
+  if (isDisplayQuestion) {
+    document.getElementById("mainSound").muted = false;
+  }
+
+  if (isDisplayEnd) {
+    document.getElementById("endSound").muted = false;
+  }
+}
+
+function changeSoundMode() {
+  audioIsEnable = !audioIsEnable;
+
+  if (audioIsEnable) {
+    unmuteSound();
+    document.querySelector(
+      ".volume"
+    ).innerHTML = `<i class="fas fa-volume-up"></i>`;
+  } else {
+    muteSound();
+    document.querySelector(
+      ".volume"
+    ).innerHTML = `<i class="fas fa-volume-mute"></i>`;
+  }
+}
+//End sound control
 
 function reset() {
   correctAnswers = 0;
