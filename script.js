@@ -6,6 +6,7 @@ let isDisplayHome = true;
 let isDisplayQuestion = false;
 let isDisplayEnd = false;
 
+
 // events
 document.querySelector(".scoreArea button").addEventListener("click", reset);
 document.querySelector(".startButton").addEventListener("click", showQuestion);
@@ -87,7 +88,7 @@ function markWrongAnswer(clickedOptionId) {
 }
 
 function finishQuiz() {
-  playEndSound();
+  playEndSound()
   const points = Math.floor((correctAnswers / questions.length) * 100);
   const scoreText1 = document.querySelector(".scoreText1");
   const scorePct = document.querySelector(".scorePct");
@@ -98,19 +99,23 @@ function finishQuiz() {
   isDisplayHome = false;
   isDisplayEnd = true;
 
+
   if (points < 30) {
     scoreText1.innerHTML = "Você se saiu mal";
     scorePct.style.color = "#ff0000";
     prizeImage.src = "./assets/YouLose.gif";
+    playEndSound()
   } else if (points >= 30 && points < 70) {
     prizeImage.style.display = "none";
     scoreText1.innerHTML = "Foi por muito pouco!";
     scorePct.style.color = "#ffff00";
+    playEndSound()
   } else if (points >= 70) {
     prizeImage.src = "./assets/Trofeu.gif";
     winArea.style.display = "flex";
     scoreText1.innerHTML = "Parabéns!";
     scorePct.style.color = "#0d630d";
+    playEndSound()
   }
 
   scorePct.innerHTML = `Acertou ${points}%`;
@@ -131,8 +136,8 @@ function playMainSound() {
 }
 
 function playStartSound() {
-  document.getElementById("mainSound").pause();
   document.getElementById("startSound").play();
+  document.getElementById("mainSound").pause();
 }
 
 function playEndSound() {
@@ -184,5 +189,5 @@ function changeSoundMode() {
 function reset() {
   correctAnswers = 0;
   currentQuestion = 0;
-  showQuestion();
+  window.location.assign("./index.html")
 }
