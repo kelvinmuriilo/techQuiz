@@ -1,7 +1,10 @@
 let questions = [
   {
-    question: `Por meio de imagens virtuais, dispositivos de realidade aumentada promovem experiências que misturam o mundo real com o mundo virtual. Esses ambientes são
-        chamados:`,
+    question:
+      `Por meio de imagens virtuais, dispositivos de realidade aumentada promovem experiências que misturam o mundo real com o mundo virtual. Esses ambientes são
+        chamados: ` +
+      ` ` +
+      '<i class="fas fa-volume-up questionSound"></i>',
     options: ["Inventivos", "Imersivos", "Mentais", "Tecnológicos"],
     answer: 1,
   },

@@ -11,7 +11,6 @@ document.querySelector(".scoreArea button").addEventListener("click", reset);
 document.querySelector(".startButton").addEventListener("click", showQuestion);
 document.querySelector(".volume").addEventListener("click", changeSoundMode);
 
-
 const audioCls = new Audio("./assets/sounds/start.mpeg");
 /* setInterval(() => {
   audioCls.play();
@@ -27,11 +26,8 @@ function showQuestion() {
   isDisplayQuestion = true;
   isDisplayEnd = false;
 
-  const video = document.querySelector(".video")
-
+  const video = document.querySelector(".video");
   video.style.display = "none";
-
-  playMainSound();
 
   document.querySelector(".homeArea").style.display = "none";
   document.querySelector(".progress").style.display = "block";
@@ -56,6 +52,10 @@ function showQuestion() {
     }
 
     document.querySelector(".options").innerHTML = optionsHtml;
+
+    document
+      .querySelector(".questionSound")
+      ?.addEventListener("click", playQuestionSound);
 
     document.querySelectorAll(".options .option").forEach((item) => {
       item.addEventListener("click", optionClickEvent);
@@ -96,6 +96,7 @@ function renderQuestionWithImage() {
 }
 
 function optionClickEvent(event) {
+  pauseQuestionSound();
   let clickedOption = parseInt(event.target.getAttribute("data-op"));
   if (questions[currentQuestion].answer === clickedOption) {
     correctAnswers++;
@@ -148,10 +149,9 @@ function finishQuiz() {
     prizeImage.src = "./assets/YouLose.gif";
     playEndSound();
   } else if (points >= 30 && points < 70) {
-    prizeImage.style.display = "none";
+    prizeImage.src = "./assets/NiceTry.gif";
     scoreText1.innerHTML = "Foi por muito pouco!";
     scorePct.style.color = "#ffff00";
-    prizeImage.src = "./assets/NiceTry.gif";
     playEndSound();
   } else if (points >= 70) {
     prizeImage.src = "./assets/Trofeu.gif";
@@ -172,26 +172,18 @@ function finishQuiz() {
 }
 
 //Sound control
-function playMainSound() {
-  document.getElementById("mainSound").play();
-  document.getElementById("startSound").pause();
-  document.getElementById("endSound").pause();
-}
-
 function playStartSound() {
   document.getElementById("startSound").play();
-  document.getElementById("mainSound").pause();
 }
 
 function playEndSound() {
   document.getElementById("endSound").pause();
   document.getElementById("endSound").currentTime = 0;
-  document.getElementById("mainSound").pause();
   document.getElementById("endSound").play();
 }
 
 function muteSound() {
-  const audioElements = document.getElementsByTagName("audio");
+  const audioElements = document.querySelectorAll(".sound");
 
   for (var i = 0; i < audioElements.length; ++i) {
     audioElements[i].muted = true;
@@ -201,10 +193,6 @@ function muteSound() {
 function unmuteSound() {
   if (isDisplayHome) {
     document.getElementById("startSound").muted = false;
-  }
-
-  if (isDisplayQuestion) {
-    document.getElementById("mainSound").muted = false;
   }
 
   if (isDisplayEnd) {
@@ -226,6 +214,14 @@ function changeSoundMode() {
       ".volume"
     ).innerHTML = `<i class="fas fa-volume-mute"></i>`;
   }
+}
+
+function playQuestionSound() {
+  document.getElementById("questionSound").play();
+}
+
+function pauseQuestionSound() {
+  document.getElementById("questionSound").pause();
 }
 //End sound control
 
