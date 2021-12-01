@@ -12,6 +12,7 @@ document.querySelector(".scoreArea button").addEventListener("click", reset);
 document.querySelector(".startButton").addEventListener("click", showQuestion);
 document.querySelector(".volume").addEventListener("click", changeSoundMode);
 
+
 const audioCls = new Audio("./assets/sounds/start.mpeg");
 /* setInterval(() => {
   audioCls.play();
@@ -26,6 +27,10 @@ function showQuestion() {
   isDisplayHome = false;
   isDisplayQuestion = true;
   isDisplayEnd = false;
+
+  const video = document.querySelector(".video")
+
+  video.style.display = "none";
 
   playMainSound();
 
