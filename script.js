@@ -6,7 +6,6 @@ let isDisplayHome = true;
 let isDisplayQuestion = false;
 let isDisplayEnd = false;
 
-
 // events
 document.querySelector(".scoreArea button").addEventListener("click", reset);
 document.querySelector(".startButton").addEventListener("click", showQuestion);
@@ -34,7 +33,7 @@ function showQuestion() {
   if (questions[currentQuestion]) {
     let q = questions[currentQuestion];
 
-    let pct = Math.floor((currentQuestion / questions.length) * 100);
+    let pct = Math.floor((currentQuestion / (questions.length + 1 + 1)) * 100);
 
     document.querySelector(".progress--bar").style.width = `${pct}%`;
 
@@ -57,13 +56,42 @@ function showQuestion() {
       item.addEventListener("click", optionClickEvent);
     });
   } else {
-    finishQuiz();
+    //finishQuiz();
+    renderQuestionWithImage();
   }
+}
+
+function renderQuestionWithImage() {
+  let question = document.querySelector(".question");
+  let options = document.querySelector(".options");
+
+  question.innerHTML = `Qual dessas memórias não é volátil?`;
+
+  options.style.display = `flex`;
+  options.innerHTML = `
+  <div class="optionImg" id="0">
+    <img data-op="0" style="width: 200px;" class="answerImg" src="./assets/question/HDSSD.png"/>
+  </div>
+  
+  <div class="optionImg" id="1">
+    <img data-op="1" class="answerImg" src="./assets/question/Memoria.png"/>
+  </div>
+  
+  <div class="optionImg" id="2">
+    <img data-op="2" class="answerImg" src="./assets/question/HDNot.png"/>
+  </div>
+
+  <div class="optionImg" id="3">
+    <img data-op="3" class="answerImg" src="./assets/question/HDBarra.png"/>
+  </div>`;
+
+  document.querySelectorAll(".options .optionImg").forEach((item) => {
+    item.addEventListener("click", optionClickEventImg);
+  });
 }
 
 function optionClickEvent(event) {
   let clickedOption = parseInt(event.target.getAttribute("data-op"));
-
   if (questions[currentQuestion].answer === clickedOption) {
     correctAnswers++;
     markCorrectAnswer(`option-${clickedOption}`);
@@ -77,6 +105,16 @@ function optionClickEvent(event) {
   }, 180);
 }
 
+function optionClickEventImg(event) {
+  let clickedOption = parseInt(event.target.getAttribute("data-op"));
+
+  if (clickedOption == 1) {
+    correctAnswers++;
+  }
+
+  finishQuiz();
+}
+
 function markCorrectAnswer(clickedOptionId) {
   const selectedOption = document.getElementById(clickedOptionId);
   selectedOption.style.backgroundColor = "#077a26";
@@ -88,8 +126,8 @@ function markWrongAnswer(clickedOptionId) {
 }
 
 function finishQuiz() {
-  playEndSound()
-  const points = Math.floor((correctAnswers / questions.length) * 100);
+  playEndSound();
+  const points = Math.floor((correctAnswers / (questions.length + 1)) * 100);
   const scoreText1 = document.querySelector(".scoreText1");
   const scorePct = document.querySelector(".scorePct");
   const prizeImage = document.querySelector(".prizeImage");
@@ -99,29 +137,29 @@ function finishQuiz() {
   isDisplayHome = false;
   isDisplayEnd = true;
 
-
   if (points < 30) {
     scoreText1.innerHTML = "Você se saiu mal";
     scorePct.style.color = "#ff0000";
     prizeImage.src = "./assets/YouLose.gif";
-    playEndSound()
+    playEndSound();
   } else if (points >= 30 && points < 70) {
     prizeImage.style.display = "none";
     scoreText1.innerHTML = "Foi por muito pouco!";
     scorePct.style.color = "#ffff00";
-    playEndSound()
+    prizeImage.src = "./assets/NiceTry.gif";
+    playEndSound();
   } else if (points >= 70) {
     prizeImage.src = "./assets/Trofeu.gif";
     winArea.style.display = "flex";
     scoreText1.innerHTML = "Parabéns!";
     scorePct.style.color = "#0d630d";
-    playEndSound()
+    playEndSound();
   }
 
   scorePct.innerHTML = `Acertou ${points}%`;
   document.querySelector(
     ".scoreText2"
-  ).innerHTML = `Você  acertou ${correctAnswers} de ${questions.length}.`;
+  ).innerHTML = `Você  acertou ${correctAnswers} de ${questions.length + 1}.`;
 
   document.querySelector(".scoreArea").style.display = "block";
   document.querySelector(".questionArea").style.display = "none";
@@ -189,5 +227,5 @@ function changeSoundMode() {
 function reset() {
   correctAnswers = 0;
   currentQuestion = 0;
-  window.location.assign("./index.html")
+  window.location.assign("./index.html");
 }
