@@ -10,6 +10,7 @@ let isDisplayEnd = false;
 document.querySelector(".scoreArea button").addEventListener("click", reset);
 document.querySelector(".startButton").addEventListener("click", showQuestion);
 document.querySelector(".volume").addEventListener("click", changeSoundMode);
+startKeyUpEvent();
 
 const audioCls = new Audio("./assets/sounds/start.mpeg");
 /* setInterval(() => {
@@ -21,6 +22,14 @@ document.querySelector(
 ).innerHTML = `<i class="fas fa-volume-up"></i>`;
 
 // functions
+function startKeyUpEvent() {
+  document.getElementById("input-name").addEventListener("keyup", (event) => {
+    if (event.key == "Enter") {
+      showQuestion();
+    }
+  });
+}
+
 function showQuestion() {
   isDisplayHome = false;
   isDisplayQuestion = true;
